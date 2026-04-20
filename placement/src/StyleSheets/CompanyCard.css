@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    width: 40px;
+    height: 40px;
+    padding-right: 10px;
+
+}
+
+.company-view-type{
+    color: rgb(0, 0, 0);
+    background-color: rgb(128, 255, 0);
+    padding: 10px;
+
+    border-radius: 5px;
+    margin-left:4cm ;
+}
+
+.company-info-label{
+    /* margin: ; */
+margin-right:30px ;
+margin-top:10px;
+margin-bottom:10px;
+}
+
+button:hover{
+    background-color: rgb(0, 255, 0);
+    cursor:pointer;
+}
+
+.company-info-value{
+    font-weight: bold;
+    margin-right:40px ;
+    margin-top:10px;
+}
+
+.company-info{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.view-Details{
+    display:flex;
+    justify-content: center;
+}
+
+button{
+    background-color:rgb(128, 255, 0); 
+    height:30px;
+    font-size: medium;
+    font-weight: bold;
+    border-radius:5px;
+    border: none;
+    width: 160px;
+    margin: 10px;
+}
+
+.company-card{
+    display: flex;
+
+    width: 300px;
+    height: 170px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.company-title{
+    display: flex;
+    /* justify-content: space-between; */
+    flex-direction: row;
+    align-items: center;
+}
+
+.company-card{
+    display: flex;
+    flex-direction:column;
+}
