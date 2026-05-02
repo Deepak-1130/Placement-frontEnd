@@ -1,5 +1,5 @@
 import React from "react";
-import "../../StyleSheets/CompanyCard.css";
+import "../StyleSheets/CompanyCard.css";
 
 const CompanyCard = ({ company }) => {
 

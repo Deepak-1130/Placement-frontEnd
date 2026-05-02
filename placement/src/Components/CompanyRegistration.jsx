@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '.StyleSheets/companyRegister.css';
+import '../StyleSheets/CompanyRegistration.css';
 
 const CompanyRegister = () => {
 

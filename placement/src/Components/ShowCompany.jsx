@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import CompanyCard from "./Cards/CompanyCard";
+import CompanyCard from "../Cards/CompanyCard";
 //fmcytion to search the company
 
 function SearchFunction({ searchValue, Company }) {
