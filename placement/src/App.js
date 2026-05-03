@@ -8,6 +8,8 @@ import ShowCompany from "./Components/ShowCompany";
 import CompanyCard from "./Cards/CompanyCard";
 import CompanyRegister from "./Components/CompanyRegistration";
 import PlacementRegistration from "./Pages/PlacementRegistration";
+import AdminDashboard from "./Pages/AdminDashboard";
+import StudentDashboard from "./Pages/StudentDashboard";
 import "./App.css";
 
 // ─── Simple auth guard ──────────────────────────────────────────────────────
@@ -37,7 +39,7 @@ function App() {
           path="/student/dashboard"
           element={
             <ProtectedRoute allowedRole="student">
-              <CompanyCard />
+              <StudentDashboard />
             </ProtectedRoute>
           }
         />
@@ -47,7 +49,7 @@ function App() {
           path="/admin/dashboard"
           element={
             <ProtectedRoute allowedRole="admin">
-              <ShowCompany />
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />
