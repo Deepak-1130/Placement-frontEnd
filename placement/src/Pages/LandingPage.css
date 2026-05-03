@@ -109,6 +109,11 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
+.lp-navbar__link--active {
+  color: var(--green);
+  font-weight: 700;
+}
+
 .lp-navbar__login {
   background: var(--green);
   border: none;

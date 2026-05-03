@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
 import LoginPage from "./Pages/LoginPage";
+import AboutPage from "./Pages/About";
+import CompaniesPage from "./Pages/Companies";
+import ContactPage from "./Pages/Contactus";
 import ShowCompany from "./Components/ShowCompany";
 import CompanyCard from "./Cards/CompanyCard";
 import CompanyRegister from "./Components/CompanyRegistration";
@@ -8,7 +11,6 @@ import PlacementRegistration from "./Pages/PlacementRegistration";
 import "./App.css";
 
 // ─── Simple auth guard ──────────────────────────────────────────────────────
-// Reads role saved in sessionStorage by LoginPage after successful login
 function ProtectedRoute({ allowedRole, children }) {
   const role = sessionStorage.getItem("role");
   if (!role) return <Navigate to="/login" replace />;
@@ -20,10 +22,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ── Public ── */}
-        <Route path="/"        element={<LandingPage />} />
-        <Route path="/login"   element={<LoginPage />} />
+        {/* ── Public Routes ── */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<PlacementRegistration />} />
+
+        {/* ── Separate Navbar Pages ── */}
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/companies" element={<CompaniesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
 
         {/* ── Student dashboard ── */}
         <Route

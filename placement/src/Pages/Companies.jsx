@@ -1,13 +1,13 @@
 import Navbar from "../Components/Navbar";
-import Hero from "../Components/Hero";
+import Companies from "../Components/Companies";
 import Footer from "../Components/Footer";
 import "./LandingPage.css";
 
-export default function LandingPage() {
+export default function CompaniesPage() {
   return (
     <div className="lp-root">
       <Navbar />
-      <Hero />
+      <Companies />
       <Footer />
     </div>
   );
