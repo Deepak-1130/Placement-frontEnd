@@ -42,17 +42,18 @@
 .pr-page {
   font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
   min-height: 100vh;
+  width: 100%;
   background: linear-gradient(135deg, var(--green-50) 0%, var(--white) 50%, var(--green-100) 100%);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem 1.5rem 1.5rem;
 }
 
 /* ── Outer Container ── */
 .pr-container {
   width: 100%;
-  max-width: 760px;
+  max-width: 100%;
 }
 
 /* ── Header ── */
@@ -132,6 +133,7 @@
   box-shadow: 0 16px 40px var(--shadow-green);
   border: 1px solid var(--green-50);
   overflow: hidden;
+  width: 100%;
 }
 
 /* ── Card Header ── */
@@ -156,6 +158,7 @@
 .pr-form {
   padding: 2rem;
   animation: prFadeIn 0.4s ease forwards;
+  width: 100%;
 }
 
 @keyframes prFadeIn {

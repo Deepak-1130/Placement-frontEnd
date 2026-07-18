@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import "./PlacementRegistration.css";
+import axios from "axios";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -58,7 +59,7 @@ function useToast() {
         setToasts((prev) => prev.filter((t) => t.id !== id));
       }, duration);
     }
-    return id;
+    return id;   
   }, []);
 
   const removeToast = useCallback((id) => {
@@ -75,10 +76,8 @@ const NAME_REGEX = /^[A-Za-z\s'-]{1,50}$/;
 const PHONE_REGEX = /^\d{10}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const INCOME_REGEX = /^\d+(\.\d{1,2})?$/;
-const GOOGLE_DRIVE_URL_REGEX = /^(https?:\/\/)?(drive\.google\.com\/file\/d\/|docs\.google\.com\/document\/d\/)[\w-]+\/.*$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-function validateStep(step, form) {
+function validateStep(step, form, resumeFile) {
   const errors = {};
 
   if (step === 1) {
@@ -102,14 +101,6 @@ function validateStep(step, form) {
     if (!form.emailId.trim()) errors.emailId = "Email is required";
     else if (!EMAIL_REGEX.test(form.emailId.trim()))
       errors.emailId = "Enter a valid email address";
-
-    if (!form.password) errors.password = "Password is required";
-    else if (!PASSWORD_REGEX.test(form.password))
-      errors.password = "Password must be at least 8 characters with uppercase, lowercase, number & special character";
-
-    if (!form.confirmPassword) errors.confirmPassword = "Please confirm your password";
-    else if (form.password !== form.confirmPassword)
-      errors.confirmPassword = "Passwords do not match";
 
     if (!form.departments) errors.departments = "Please select a department";
     if (!form.passedOutYear) errors.passedOutYear = "Please select passed out year";
@@ -161,10 +152,10 @@ function validateStep(step, form) {
   }
 
   if (step === 4) {
-    if (!form.resumeUrl.trim()) {
-      errors.resumeUrl = "Google Drive resume URL is required";
-    } else if (!GOOGLE_DRIVE_URL_REGEX.test(form.resumeUrl.trim())) {
-      errors.resumeUrl = "Please enter a valid Google Drive shareable link";
+    if (!resumeFile) {
+      errors.resumeFile = "Please upload your resume PDF";
+    } else if (resumeFile.type !== "application/pdf") {
+      errors.resumeFile = "Please upload a valid PDF file";
     }
   }
 
@@ -172,15 +163,12 @@ function validateStep(step, form) {
 }
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-
 const INITIAL_FORM = {
   registerNumber: "",
   firstName: "",
   lastName: "",
   studentNumber: "",
   emailId: "",
-  password: "",
-  confirmPassword: "",
   departments: "",
   passedOutYear: "",
   gender: "",
@@ -193,21 +181,20 @@ const INITIAL_FORM = {
   motherOccupation: "",
   familyIncome: "",
   parentNumber: "",
-  resumeUrl: "",
 };
 
 export default function PlacementRegistration() {
   const [step, setStep] = useState(1);
   const [profilePreview, setProfilePreview] = useState(null);
   const [profileFile, setProfileFile] = useState(null);
+  const [resumeFile, setResumeFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState(INITIAL_FORM);
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const profileRef = useRef();
+  const resumeRef = useRef();
   const submitLockRef = useRef(false);
 
   const { toasts, addToast, removeToast } = useToast();
@@ -218,8 +205,7 @@ export default function PlacementRegistration() {
     if (savedForm) {
       try {
         const parsedForm = JSON.parse(savedForm);
-        // Don't restore password fields for security
-        setForm({ ...parsedForm, password: "", confirmPassword: "" });
+        setForm(parsedForm);
       } catch (e) {
         console.error("Error loading saved form:", e);
       }
@@ -230,11 +216,10 @@ export default function PlacementRegistration() {
     }
   }, []);
 
-  // ── Auto-save on change (excluding password) ───────────────────────────────────
+  // ── Auto-save on change ───────────────────────────────────────────────────
   useEffect(() => {
     if (submitted) return;
-    const { password, confirmPassword, ...formToSave } = form;
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formToSave));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(form));
   }, [form, submitted]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
@@ -272,10 +257,25 @@ export default function PlacementRegistration() {
     addToast("Profile picture selected ✓", "success", 2500);
   };
 
+  const handleResumeUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      setErrors((p) => ({ ...p, resumeFile: "Please upload a PDF file" }));
+      addToast("Please upload your resume as a PDF", "error");
+      return;
+    }
+
+    setResumeFile(file);
+    setErrors((p) => ({ ...p, resumeFile: "" }));
+    addToast("Resume PDF selected ✓", "success", 2500);
+  };
+
   // ── Navigation ────────────────────────────────────────────────────────────
 
   const nextStep = () => {
-    const errs = validateStep(step, form);
+    const errs = validateStep(step, form, resumeFile);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       addToast("Please fix the errors before continuing", "warning");
@@ -291,21 +291,18 @@ export default function PlacementRegistration() {
   // ── API calls ─────────────────────────────────────────────────────────────
 
   const submitRegistrationData = async () => {
-    // Convert registerNumber to Long (number)
     const registerNumberValue = parseInt(form.registerNumber.trim(), 10);
-    
-    // Validate that registerNumber is a valid number
+
     if (isNaN(registerNumberValue)) {
       throw new Error("Invalid register number");
     }
-    
+
     const registrationData = {
       registerNumber: registerNumberValue,
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
       studentNumber: form.studentNumber.trim(),
       emailId: form.emailId.trim(),
-      password: form.password,
       departments: form.departments,
       passedOutYear: parseInt(form.passedOutYear, 10),
       gender: form.gender,
@@ -318,60 +315,54 @@ export default function PlacementRegistration() {
       motherOccupation: form.motherOccupation.trim(),
       familyIncome: parseFloat(form.familyIncome),
       parentNumber: form.parentNumber.trim(),
-      resumeUrl: form.resumeUrl.trim(),
     };
 
-    console.log("Submitting registration data:", { ...registrationData, password: "***" });
-
-    const response = await fetch(`${API_BASE_URL}/addStudent`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(registrationData),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Registration error response:", errorText);
-      throw new Error(errorText || "Registration failed");
+    const formData = new FormData();
+    formData.append("student", JSON.stringify(registrationData));
+    if (profileFile) {
+      formData.append("profilePic", profileFile);
     }
 
-    const result = await response.text();
-    console.log("Registration successful:", result);
-    
-    return registerNumberValue;
+    console.log("Submitting registration data:", registrationData);
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/addStudent`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      console.log("Registration successful:", response.data);
+      return registerNumberValue;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || "Registration failed";
+      console.error("Registration error:", errorMessage);
+      throw new Error(errorMessage);
+    }
   };
 
-  const uploadProfilePicture = async (registerNumber) => {
-    if (!profileFile) {
-      console.log("No profile picture to upload");
-      return { success: true, message: "No file selected" };
+  const uploadResumePdf = async (registerNumber) => {
+    if (!resumeFile) {
+      throw new Error("Resume PDF is required");
     }
-    
+
     const fd = new FormData();
-    fd.append("file", profileFile);
-    
-    console.log("Uploading profile picture for registerNumber:", registerNumber);
-    
+    fd.append("file", resumeFile);
+    fd.append("resume", resumeFile);
+
+    console.log("Uploading resume for registerNumber:", registerNumber);
+
     try {
-      const res = await fetch(`${API_BASE_URL}/students/${registerNumber}/profile`, {
-        method: "POST",
-        body: fd,
+      const response = await axios.post(`${API_BASE_URL}/addResume/${registerNumber}`, fd, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
-      
-      const responseText = await res.text();
-      console.log("Profile upload response:", responseText);
-      
-      if (!res.ok) {
-        throw new Error(responseText || `Upload failed with status ${res.status}`);
-      }
-      
-      addToast("Profile picture uploaded ✓", "success", 2500);
-      return { success: true, message: responseText };
+
+      console.log("Resume upload successful:", response.data);
+      addToast("Resume uploaded ✓", "success", 2500);
+      return { success: true, message: response.data };
     } catch (error) {
-      console.error("Profile upload error:", error);
-      // Don't fail the whole registration if profile upload fails
-      addToast(`Note: Profile picture upload failed - ${error.message}. You can upload it later.`, "warning", 5000);
-      return { success: false, message: error.message };
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || error.message || "Resume upload failed";
+      console.error("Resume upload error:", errorMessage);
+      addToast(`Resume upload failed: ${errorMessage}`, "error", 5000);
+      throw new Error(errorMessage);
     }
   };
 
@@ -385,7 +376,7 @@ export default function PlacementRegistration() {
       return;
     }
 
-    const errs = validateStep(4, form);
+    const errs = validateStep(4, form, resumeFile);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       addToast("Please fix the errors before submitting", "warning");
@@ -396,28 +387,21 @@ export default function PlacementRegistration() {
     setIsSubmitting(true);
 
     try {
-      // First, register the student and get the register number
       addToast("Registering student information...", "info", 2000);
       const registerNumber = await submitRegistrationData();
       addToast("Student information saved ✓", "success", 2500);
-      
-      // Add a small delay to ensure student is fully saved in database
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Then upload profile picture if selected
-      if (profileFile) {
-        addToast("Uploading profile picture...", "info", 2000);
-        await uploadProfilePicture(registerNumber);
-      } else {
-        addToast("No profile picture selected (optional)", "info", 2000);
-      }
 
-      // Clear saved form data
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      addToast("Uploading resume PDF...", "info", 2000);
+      await uploadResumePdf(registerNumber);
+
+      sessionStorage.setItem(SUBMITTED_KEY, "true");
       sessionStorage.setItem(SUBMITTED_KEY, "true");
       sessionStorage.removeItem(STORAGE_KEY);
       setSubmitted(true);
 
-      addToast("🎉 Registration submitted successfully!", "success", 6000);
+      addToast(" Registration submitted successfully!", "success", 6000);
     } catch (error) {
       console.error("Submission error:", error);
       let errorMessage = error.message;
@@ -452,16 +436,6 @@ export default function PlacementRegistration() {
     if (step === id) return "pr-dot pr-dot--active";
     if (step > id) return "pr-dot pr-dot--done";
     return "pr-dot pr-dot--inactive";
-  };
-
-  // ── Google Drive URL Helper ───────────────────────────────────────────────
-
-  const getGoogleDriveEmbedUrl = (url) => {
-    const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-    if (match && match[1]) {
-      return `https://drive.google.com/file/d/${match[1]}/preview`;
-    }
-    return url;
   };
 
   // ── Already submitted guard ───────────────────────────────────────────────
@@ -619,52 +593,6 @@ export default function PlacementRegistration() {
                       className={ic("emailId")} 
                     />
                     {errors.emailId && <p className="pr-error">{errors.emailId}</p>}
-                  </div>
-                </div>
-
-                <div className="pr-grid-2">
-                  <div className="pr-field">
-                    <label className="pr-label">Password *</label>
-                    <div className="pr-password-wrapper">
-                      <input 
-                        name="password" 
-                        type={showPassword ? "text" : "password"}
-                        value={form.password} 
-                        onChange={handleChange}
-                        placeholder="Create a password" 
-                        className={ic("password")} 
-                      />
-                      <button
-                        type="button"
-                        className="pr-password-toggle"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? "👁️" : "👁️‍🗨️"}
-                      </button>
-                    </div>
-                    <p className="pr-hint">Minimum 8 chars: uppercase, lowercase, number & special char</p>
-                    {errors.password && <p className="pr-error">{errors.password}</p>}
-                  </div>
-                  <div className="pr-field">
-                    <label className="pr-label">Confirm Password *</label>
-                    <div className="pr-password-wrapper">
-                      <input 
-                        name="confirmPassword" 
-                        type={showConfirmPassword ? "text" : "password"}
-                        value={form.confirmPassword} 
-                        onChange={handleChange}
-                        placeholder="Confirm your password" 
-                        className={ic("confirmPassword")} 
-                      />
-                      <button
-                        type="button"
-                        className="pr-password-toggle"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      >
-                        {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
-                      </button>
-                    </div>
-                    {errors.confirmPassword && <p className="pr-error">{errors.confirmPassword}</p>}
                   </div>
                 </div>
 
@@ -892,37 +820,23 @@ export default function PlacementRegistration() {
               <div className="pr-field-group">
                 <div className="pr-docs-box">
                   <p className="pr-section-label">Upload Documents</p>
-                  
-                  <div className="pr-field">
-                    <label className="pr-label">Google Drive Resume URL *</label>
-                    <input 
-                      name="resumeUrl" 
-                      type="url"
-                      value={form.resumeUrl} 
-                      onChange={handleChange}
-                      placeholder="https://drive.google.com/file/d/..." 
-                      className={ic("resumeUrl")} 
-                    />
-                    <p className="pr-hint">
-                      Share your resume from Google Drive (make sure link sharing is enabled)
-                    </p>
-                    {errors.resumeUrl && <p className="pr-error">{errors.resumeUrl}</p>}
-                  </div>
 
-                  {form.resumeUrl && GOOGLE_DRIVE_URL_REGEX.test(form.resumeUrl) && (
-                    <div className="pr-resume-preview">
-                      <p className="pr-resume-preview-title">Resume Preview:</p>
-                      <iframe
-                        src={getGoogleDriveEmbedUrl(form.resumeUrl)}
-                        title="Resume Preview"
-                        className="pr-resume-iframe"
-                        frameBorder="0"
+                  <div className="pr-field">
+                    <label className="pr-label">Resume PDF *</label>
+                    <div className="pr-upload-zone" onClick={() => resumeRef.current.click()}>
+                      <p className="pr-upload-title">Click to upload your resume PDF</p>
+                      <p className="pr-upload-hint">PDF only • Max 5MB</p>
+                      <input
+                        ref={resumeRef}
+                        type="file"
+                        accept="application/pdf"
+                        onChange={handleResumeUpload}
+                        className="pr-hidden-input"
                       />
                     </div>
-                  )}
-                </div>
-
-                <div className="pr-summary-box">
+                    {resumeFile && <p className="pr-hint">Selected file: {resumeFile.name}</p>}
+                    {errors.resumeFile && <p className="pr-error">{errors.resumeFile}</p>}
+                  </div>
                   <p className="pr-summary-label">Registration Summary</p>
                   <div className="pr-summary-grid">
                     {[
@@ -966,7 +880,7 @@ export default function PlacementRegistration() {
                 ))}
               </div>
 
-              {step < 4
+              {step < 4 
                 ? <button type="button" onClick={nextStep} disabled={isSubmitting} className="pr-btn-next">
                     Next →
                   </button>
@@ -978,7 +892,7 @@ export default function PlacementRegistration() {
                     {isSubmitting ? (
                       <><span className="pr-spinner" /> Submitting…</>
                     ) : (
-                      "🚀 Submit Registration"
+                      " Submit Registration"
                     )}
                   </button>
               }

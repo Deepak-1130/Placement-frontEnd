@@ -1,5 +1,5 @@
 import Navbar from "../Components/Navbar";
-import Companies from "../Components/Companies";
+import Companies from "../Components/CompanyComponent";
 import Footer from "../Components/Footer";
 import "./LandingPage.css";
 

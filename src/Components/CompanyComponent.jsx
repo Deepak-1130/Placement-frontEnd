@@ -29,6 +29,10 @@ export default function Companies() {
       setLoading(false);
     }
   };
+
+
+
+  
 const filteredCompanies=companies.filter((company)=>{
   const type = filterType.trim().toLowerCase();
   if(!type) return true;

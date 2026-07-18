@@ -12,9 +12,10 @@ import CompanyRegister from "./Components/CompanyRegistration";
 import PlacementRegistration from "./Pages/PlacementRegistration";
 import AdminDashboard from "./Pages/AdminDashboard";
 import StudentDashboard from "./Pages/StudentDashboard";
+import Registration from "./Pages/Registration";
 import "./App.css";
 
-// ─── Simple auth guard ──────────────────────────────────────────────────────
+
 function ProtectedRoute({ allowedRole, children }) {
   const role = sessionStorage.getItem("role");
   if (!role) return <Navigate to="/login" replace />;
@@ -27,10 +28,13 @@ function App() {
   
     <BrowserRouter>
       <Routes>
+        
         {/* ── Public Routes ── */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<PlacementRegistration />} />
+                {/* <Route path="/register" element={<Registration/>} /> */}
+
 
         {/* ── Separate Navbar Pages ── */}
         <Route path="/about" element={<AboutPage />} />
