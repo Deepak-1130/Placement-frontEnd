@@ -5,10 +5,10 @@ import axios from "axios";
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 const steps = [
-  { id: 1, label: "Academic Info", icon: "🎓" },
-  { id: 2, label: "Personal Info", icon: "👤" },
-  { id: 3, label: "Family Info", icon: "🏠" },
-  { id: 4, label: "Documents", icon: "📄" },
+  { id: 1, label: "Academic Information" },
+  { id: 2, label: "Personal Information" },
+  { id: 3, label: "Family Information" },
+  { id: 4, label: "Documents" },
 ];
 
 const departments = ["CSE", "IT", "ECE", "EEE", "MECH", "Civil"];
@@ -35,9 +35,6 @@ function Toast({ toasts, removeToast }) {
     <div className="pr-toast-container">
       {toasts.map((t) => (
         <div key={t.id} className={`pr-toast pr-toast--${t.type}`}>
-          <span className="pr-toast-icon">
-            {t.type === "success" ? "✅" : t.type === "error" ? "❌" : t.type === "warning" ? "⚠️" : "ℹ️"}
-          </span>
           <span className="pr-toast-msg">{t.message}</span>
           <button className="pr-toast-close" onClick={() => removeToast(t.id)}>×</button>
         </div>
@@ -446,11 +443,10 @@ export default function PlacementRegistration() {
         <Toast toasts={toasts} removeToast={removeToast} />
         <div className="pr-container">
           <div className="pr-success-screen">
-            <div className="pr-success-icon">🎉</div>
-            <h2 className="pr-success-title">Registration Complete!</h2>
+            <h2 className="pr-success-title">Registration Submitted</h2>
             <p className="pr-success-msg">
               Your placement registration has been submitted successfully.
-              The placement cell will reach out to you via email.
+              The placement team will contact you via email.
             </p>
             <p className="pr-success-email">{form.emailId}</p>
             <button 

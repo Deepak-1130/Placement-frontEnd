@@ -22,6 +22,7 @@ const Registration = () => {
     nativePlace: '',
     historyOfArrears: ''
   });
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
@@ -31,17 +32,18 @@ const Registration = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8080/addStudent', student);
-      alert(response.data); 
+      setStatusMessage('Student registered successfully. Please proceed to upload your resume.');
       navigate(`/upload-resume/${student.registerNumber}`);
     } catch (error) {
       console.error(error);
-      alert("Error adding student. Check console!");
+      setStatusMessage('Unable to complete registration. Please try again or contact support.');
     }
   };
 
   return (
     <div className="registration-container">
       <h2>Student Registration Form</h2>
+      {statusMessage && <div className="status-message">{statusMessage}</div>}
       <form onSubmit={handleSubmit}>
         
         <div className="form-group">

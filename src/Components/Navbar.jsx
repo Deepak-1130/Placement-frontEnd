@@ -14,7 +14,7 @@ export default function Navbar() {
 
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "About", path: "/about" },
+    // { label: "About", path: "/about" },
     { label: "Companies", path: "/companies" },
     { label: "Contact", path: "/contact" },
   ];

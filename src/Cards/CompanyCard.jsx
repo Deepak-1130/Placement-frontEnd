@@ -3,7 +3,9 @@ import "../StyleSheets/CompanyDashboard.css";
 import { useNavigate } from "react-router-dom";
 const CompanyCard = ({ company }) => {
     const navigate = useNavigate();
+    console.log(company.companyType)
 function handleViewDetails(){
+  console.log(company.companyType)
 
     window.open(`http://www.${company.companyName}.com`)
     
@@ -19,7 +21,13 @@ function handleViewDetails(){
                   className="company-logo"
                 />
               </div>
-              <span className="category-tag">IT</span>
+
+              {company.companyType == "IT" ? (
+  <span className="category-tag">IT</span>
+) : (
+  <span className="category-tag">CORE</span>
+)}
+             
             </div>
 
             <h3 className="company-name">{company.companyName}</h3>

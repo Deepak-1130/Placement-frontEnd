@@ -1,0 +1,150 @@
+.placement-portal-section {
+    width: 100%;
+    padding: 90px 0;
+    background: #f8fafc;
+}
+
+.placement-portal-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.placement-portal-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #2563eb;
+}
+
+.placement-portal-content h1 {
+    margin: 15px 0;
+
+    font-size: 52px;
+    line-height: 1.1;
+    color: #0f172a;
+}
+
+.placement-portal-content h1 span {
+    color: #2563eb;
+}
+
+.placement-portal-content p {
+    max-width: 600px;
+
+    font-size: 17px;
+    line-height: 1.7;
+    color: #64748b;
+}
+
+.placement-portal-stats {
+    display: flex;
+    gap: 45px;
+    margin-top: 40px;
+}
+
+.portal-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.portal-stat strong {
+    font-size: 28px;
+    color: #0f172a;
+}
+
+.portal-stat span {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.placement-portal-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.portal-card {
+    width: 100%;
+    max-width: 430px;
+
+    padding: 28px;
+
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+.portal-card-header {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.portal-status {
+    color: #16a34a;
+}
+
+.portal-card-main {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    padding-top: 30px;
+}
+
+.portal-circle {
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 12px solid #2563eb;
+}
+
+.portal-circle strong {
+    font-size: 28px;
+}
+
+.portal-circle span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.portal-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.portal-card-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.portal-card-details span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.portal-card-details strong {
+    color: #0f172a;
+}

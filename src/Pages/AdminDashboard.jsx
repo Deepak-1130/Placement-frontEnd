@@ -1,61 +1,59 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+﻿import React, { useState } from "react";
 
-function AdminDashboard() {
-  const navigate = useNavigate();
+import AdminDashboardSideBar from "../Components/AdminDashboardSideBar";
+import DashboardMain from "../Components/DashboardMain";
+import DashBoardStudents from "../Components/AdminDashBoardStudents";
+import DashboardCompanies from "../Components/DashboardCompanies";
+import DashboardPlacedStudents from "../Components/DashboardPlacedStudents";
 
-  return (
-    <div style={{ padding: "30px" }}>
-      <h1>🛠 Admin Dashboard</h1>
-      <p>Welcome, Admin!</p>
+import "../StyleSheets/AdminDashboard.css";
 
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={() => navigate("/admin/company/register")}
-          style={{
-            padding: "10px 20px",
-            marginRight: "10px",
-            background: "green",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-          }}
-        >
-          ➕ Add Company
-        </button>
+const AdminDashboard = () => {
 
-        <button
-          onClick={() => navigate("/admin/dashboard")}
-          style={{
-            padding: "10px 20px",
-            background: "blue",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-          }}
-        >
-          📋 View Companies
-        </button>
-      </div>
+    const [activePage, setActivePage] = useState("dashboard");
 
-      <button
-        onClick={() => {
-          sessionStorage.clear();
-          navigate("/login");
-        }}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          background: "red",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-        }}
-      >
-        Logout
-      </button>
-    </div>
-  );
-}
+    const onPageChange = (page) => {
+        setActivePage(page);
+    };
+
+    const renderContent = () => {
+
+        switch (activePage) {
+
+            case "students":
+                return <DashBoardStudents />;
+
+            case "companies":
+                return <DashboardCompanies />;
+
+            case "placed-students":
+                return <DashboardPlacedStudents />;
+
+            case "dashboard":
+            default:
+                return <DashboardMain />;
+        }
+    };
+
+    return (
+        <div className="admin-dashboard">
+
+            <div className="admin-dashboard-sidebar">
+
+                <AdminDashboardSideBar
+                    onPageChange={onPageChange}
+                />
+
+            </div>
+
+            <main className="admin-dashboard-main">
+
+                {renderContent()}
+
+            </main>
+
+        </div>
+    );
+};
 
 export default AdminDashboard;

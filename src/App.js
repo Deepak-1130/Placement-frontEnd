@@ -11,8 +11,9 @@ import CompanyCard from "./Cards/CompanyCard";
 import CompanyRegister from "./Components/CompanyRegistration";
 import PlacementRegistration from "./Pages/PlacementRegistration";
 import AdminDashboard from "./Pages/AdminDashboard";
-import StudentDashboard from "./Pages/StudentDashboard";
+// import StudentDashboard from "./Pages/StudentDashboard";
 import Registration from "./Pages/Registration";
+import Header from "./Components/Header";
 import "./App.css";
 
 
@@ -27,6 +28,7 @@ function App() {
  return (
   
     <BrowserRouter>
+      <Header />
       <Routes>
         
         {/* ── Public Routes ── */}
@@ -42,14 +44,14 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
 
         {/* ── Student dashboard ── */}
-        <Route
+        {/* <Route
           path="/student/dashboard"
           element={
             <ProtectedRoute allowedRole="student">
               <StudentDashboard />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         {/* ── Admin dashboard ── */}
         <Route

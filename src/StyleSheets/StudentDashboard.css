@@ -1,0 +1,309 @@
+.student-dashboard {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background: #f8fafc;
+
+    color: #1e293b;
+}
+
+
+/* ================= HEADER ================= */
+
+.student-dashboard-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+}
+
+.student-dashboard-header h1 {
+    margin: 0;
+
+    font-size: 26px;
+
+    color: #1e293b;
+}
+
+.student-dashboard-header p {
+    margin-top: 6px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* ================= RESUME BUTTON ================= */
+
+.resume-button {
+    padding: 10px 18px;
+
+    background: #0284c7;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.resume-button:hover {
+    background: #0369a1;
+}
+
+
+/* ================= SECTION ================= */
+
+.student-section {
+    margin-bottom: 20px;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+}
+
+
+/* Section header */
+
+.section-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #1e293b;
+}
+
+.section-header span {
+    font-size: 13px;
+
+    color: #94a3b8;
+}
+
+
+/* ================= DETAILS GRID ================= */
+
+.details-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* Detail item */
+
+.detail-item {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 12px 14px;
+
+    background: #f8fafc;
+
+    border-radius: 7px;
+
+    border: 1px solid #f1f5f9;
+}
+
+.detail-label {
+    font-size: 12px;
+
+    color: #64748b;
+
+    font-weight: 500;
+}
+
+.detail-value {
+    font-size: 14px;
+
+    color: #1e293b;
+
+    font-weight: 600;
+
+    word-break: break-word;
+}
+
+
+/* ================= PLACEMENT ================= */
+
+.placement-card {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border-radius: 10px;
+
+    border: 1px solid #e2e8f0;
+}
+
+.placement-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+}
+
+.placement-status h3 {
+    margin: 0;
+
+    font-size: 15px;
+}
+
+.placement-status p {
+    margin-top: 4px;
+
+    font-size: 13px;
+
+    color: #64748b;
+}
+
+.placement-info {
+    display: flex;
+
+    gap: 40px;
+}
+
+.placement-info div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.placement-info span {
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+.placement-info strong {
+    font-size: 15px;
+
+    color: #1e293b;
+}
+
+
+/* ================= EMPTY ================= */
+
+.student-empty {
+    padding: 60px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+}
+
+.student-empty h2 {
+    margin-bottom: 8px;
+}
+
+.student-empty p {
+    color: #64748b;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+    .details-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .student-dashboard {
+        padding: 15px;
+    }
+
+    .student-dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .placement-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .placement-info {
+        gap: 25px;
+    }
+}

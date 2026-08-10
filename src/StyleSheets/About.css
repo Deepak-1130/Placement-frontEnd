@@ -1,0 +1,248 @@
+.about-page{
+    background:#f8fafc;
+    color:#1e293b;
+}
+
+.about-hero{
+    max-width:900px;
+    margin:auto;
+    padding:90px 20px 70px;
+    text-align:center;
+}
+
+.about-tag,
+.section-label{
+    color:#2563eb;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.5px;
+}
+
+.about-hero h1{
+    font-size:44px;
+    margin:14px 0;
+}
+
+.about-hero p{
+    font-size:17px;
+    line-height:1.8;
+    color:#64748b;
+}
+
+.about-features,
+.placement-cell,
+.recruiters-section,
+.drives-section{
+    padding:70px 8%;
+}
+
+.about-features h2,
+.placement-cell h2,
+.section-header h2{
+    font-size:34px;
+    margin:12px 0 16px;
+}
+
+.section-header{
+    text-align:center;
+    max-width:700px;
+    margin:0 auto 40px;
+}
+
+.section-header p{
+    color:#64748b;
+    line-height:1.7;
+}
+
+/* Features */
+
+.feature-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:24px;
+}
+
+.feature-card{
+    background:#fff;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    position:relative;
+    transition:.25s;
+}
+
+.feature-card:hover{
+    transform:translateY(-6px);
+}
+
+.feature-icon{
+    width:54px;
+    height:54px;
+    border-radius:14px;
+    margin-bottom:20px;
+}
+
+.feature-card h3{
+    margin-bottom:10px;
+}
+
+.feature-card p{
+    color:#64748b;
+    line-height:1.6;
+}
+
+.feature-line{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:5px;
+    border-radius:0 0 18px 18px;
+}
+
+/* Placement */
+
+.placement-content{
+    max-width:1000px;
+    margin:auto;
+}
+
+.placement-content p{
+    color:#475569;
+    line-height:1.8;
+    margin-bottom:18px;
+}
+
+.placement-highlights{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+    margin-top:36px;
+}
+
+.highlight-card{
+    background:#fff;
+    border-radius:16px;
+    padding:24px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(15,23,42,.05);
+}
+
+.highlight-card h3{
+    color:#2563eb;
+    font-size:34px;
+    margin:0;
+}
+
+.highlight-card span{
+    color:#64748b;
+    font-size:14px;
+}
+
+/* Recruiters */
+
+.recruiter-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:22px;
+}
+
+.recruiter-card{
+    background:#fff;
+    border-radius:16px;
+    padding:28px 20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(15,23,42,.05);
+    transition:.25s;
+}
+
+.recruiter-card:hover{
+    transform:translateY(-5px);
+}
+
+.recruiter-logo{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    background:#eff6ff;
+    color:#2563eb;
+    font-size:28px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 16px;
+}
+
+/* Drives */
+
+.drives-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    max-width:900px;
+    margin:auto;
+}
+
+.drive-card{
+    background:#fff;
+    border-radius:16px;
+    padding:22px 26px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    box-shadow:0 8px 20px rgba(15,23,42,.05);
+}
+
+.drive-date{
+    min-width:110px;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.drive-info{
+    flex:1;
+}
+
+.drive-info h3{
+    margin:0 0 6px;
+}
+
+.drive-info p{
+    color:#64748b;
+    margin:0;
+}
+
+.drive-type{
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.drive-type.placement{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.drive-type.internship{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+@media (max-width:768px){
+
+    .about-hero h1{
+        font-size:34px;
+    }
+
+    .drive-card{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .drive-date{
+        min-width:auto;
+    }
+}

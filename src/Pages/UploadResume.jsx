@@ -7,6 +7,7 @@ const UploadResume = () => {
   const { regNo } = useParams(); 
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -14,8 +15,10 @@ const UploadResume = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    setStatusMessage('');
+
     if (!file) {
-      alert("Please select a PDF file first!");
+      setStatusMessage('Please select a PDF file to upload.');
       return;
     }
 
@@ -23,16 +26,16 @@ const UploadResume = () => {
     formData.append('resume', file);
 
     try {
-      const response = await axios.post(`http://localhost:8080/addResume/${regNo}`, formData, {
+      await axios.post(`http://localhost:8080/addResume/${regNo}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      alert(response.data); 
-      navigate('/'); 
+      setStatusMessage('Resume uploaded successfully.');
+      navigate('/');
     } catch (error) {
       console.error(error);
-      alert("Error uploading file.");
+      setStatusMessage('Resume upload failed. Please try again.');
     }
   };
 
@@ -53,9 +56,10 @@ const UploadResume = () => {
         </div>
         
         <button type="submit" className="upload-btn">
-          Upload & Complete
+          Upload Resume
         </button>
       </form>
+      {statusMessage && <div className="status-message">{statusMessage}</div>}
     </div>
   );
 };

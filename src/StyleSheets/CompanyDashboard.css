@@ -54,19 +54,19 @@
 }
 
 .logo-section {
-  flex: 1;
-  height: 60px;
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f5f5f5;
-  border-radius: 8px;
+  border-radius: 14px;
 }
 
 .company-logo {
-  max-width: 100%;
-  max-height: 60px;
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
   object-fit: contain;
 }
 

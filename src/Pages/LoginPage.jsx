@@ -23,6 +23,15 @@ function LoginPage() {
       return;
     }
 
+    // Static admin credentials
+    if (email === "12345678@gmail.com" && password === "12345678") {
+      sessionStorage.setItem("role", "admin");
+      localStorage.setItem("userRole", "admin");
+      localStorage.setItem("userEmail", email);
+      navigate("/admin/dashboard");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -124,25 +133,21 @@ function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>Welcome Back</h1>
-        <p>Enter your credentials to access your placement dashboard.</p>
+        <h1>Sign In</h1>
+        <p>Use your registered credentials to access the placement portal.</p>
 
-        {/* Error Message */}
         {error && (
           <div className="error-message">
-            <span className="error-icon">⚠️</span>
             <span>{error}</span>
           </div>
         )}
 
-        {/* EMAIL */}
         <div className="input-group">
           <label>Email Address</label>
           <div className="input-box">
-            <span className="icon">📧</span>
             <input
               type="email"
-              placeholder="name@company.com"
+              placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -152,20 +157,16 @@ function LoginPage() {
           </div>
         </div>
 
-        {/* PASSWORD */}
         <div className="input-group">
           <div className="password-label">
             <label>Password</label>
-            <span className="forgot" onClick={() => alert("Contact admin to reset password")}>
-              Forgot Password?
-            </span>
+            <span className="forgot">Forgot Password?</span>
           </div>
 
           <div className="input-box">
-            <span className="icon">🔒</span>
             <input
               type="password"
-              placeholder="********"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -175,7 +176,6 @@ function LoginPage() {
           </div>
         </div>
 
-        {/* LOGIN BUTTON */}
         <button 
           className="login-btn" 
           onClick={handleLogin}
@@ -191,33 +191,8 @@ function LoginPage() {
           )}
         </button>
 
-        {/* DIVIDER */}
-        <div className="divider">
-          <span>OR CONTINUE WITH</span>
-        </div>
-
-        {/* SOCIAL */}
-        <div className="social-buttons">
-          <button 
-            className="social-btn" 
-            onClick={() => alert("Google login coming soon!")}
-            disabled={isLoading}
-          >
-            Google
-          </button>
-          <button 
-            className="social-btn" 
-            onClick={() => alert("LinkedIn login coming soon!")}
-            disabled={isLoading}
-          >
-            LinkedIn
-          </button>
-        </div>
-
-        {/* SIGNUP */}
         <p className="signup-text">
-          Don't have an account?{" "}
-          <span onClick={handleSignup}>Sign Up</span>
+          Need an account? <span onClick={handleSignup}>Create one</span>
         </p>
       </div>
     </div>

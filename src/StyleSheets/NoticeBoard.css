@@ -1,0 +1,92 @@
+/* Outer Container - Full Width Expansion */
+.notice-board {
+  width: 100vw; /* Spans full viewport width */
+  margin-left: calc(-50vw + 50%); /* Centers container full-width even inside centered parent wrappers */
+  margin-right: calc(-50vw + 50%);
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1.5rem 2rem;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header */
+.notice-board h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #2563eb;
+}
+
+/* Viewport Container (Sized for exactly 4 notices + 3 gaps) */
+.notice-board-content {
+  /* (4 items * 50px) + (3 gaps * 10px) = 230px */
+  height: 230px; 
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Scrolling List */
+.notice-board-content ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* Smooth infinite vertical animation */
+  animation: scrollUp 12s linear infinite;
+}
+
+/* PAUSE SCROLLING ON HOVER */
+.notice-board-content:hover ul {
+  animation-play-state: paused;
+}
+
+/* Full-Width Notice Item Styling */
+.notice-board-content li {
+  height: 50px;
+  width: 100%;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  
+  display: flex;
+  align-items: center;
+  
+  background-color: #f8fafc;
+  border-left: 5px solid #2563eb;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  
+  /* Text Truncation */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+/* Hover Effect */
+.notice-board-content li:hover {
+  background-color: #eff6ff;
+  border-left-color: #1d4ed8;
+}
+
+/* Keyframe Loop */
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}

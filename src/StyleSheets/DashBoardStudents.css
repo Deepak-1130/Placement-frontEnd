@@ -1,0 +1,457 @@
+.students-page {
+    width: 100%;
+}
+
+
+/* ================= HEADER ================= */
+
+.students-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.students-header h1 {
+    margin: 0;
+
+    font-size: 26px;
+    font-weight: 600;
+
+    color: #1e293b;
+}
+
+.students-header p {
+    margin-top: 5px;
+
+    color: #64748b;
+    font-size: 14px;
+}
+
+
+/* ================= COUNT ================= */
+
+.student-count {
+    padding: 10px 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+
+    color: #64748b;
+    font-size: 14px;
+}
+
+.student-count strong {
+    color: #0369a1;
+}
+
+
+/* ================= FILTERS ================= */
+
+.student-filters {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    padding: 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+}
+
+
+/* Search */
+
+.search-box {
+    flex: 1;
+
+    min-width: 250px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 12px;
+
+    height: 42px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+}
+
+.search-box:focus-within {
+    border-color: #38bdf8;
+
+    box-shadow: 0 0 0 2px #e0f2fe;
+}
+
+.search-icon {
+    font-size: 14px;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 14px;
+
+    color: #334155;
+}
+
+.search-box input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* Select */
+
+.student-filters select {
+    height: 42px;
+
+    padding: 0 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+.student-filters select:focus {
+    border-color: #38bdf8;
+}
+
+
+/* Clear */
+
+.clear-filter {
+    height: 42px;
+
+    padding: 0 15px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.clear-filter:hover {
+    background: #e2e8f0;
+}
+
+
+/* ================= TABLE ================= */
+
+.students-table-container {
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
+
+    overflow-x: auto;
+}
+
+.students-table {
+    width: 100%;
+
+    min-width: 700px;
+
+    border-collapse: collapse;
+}
+
+.students-table thead {
+    background: #f8fafc;
+}
+
+.students-table th {
+    padding: 14px 18px;
+
+    text-align: left;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #475569;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.students-table td {
+    padding: 14px 18px;
+
+    font-size: 14px;
+
+    color: #475569;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.students-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+
+/* Student name */
+
+.student-name {
+    font-weight: 500;
+
+    color: #1e293b !important;
+}
+
+
+/* Resume */
+
+.resume-button {
+    display: inline-block;
+
+    padding: 7px 13px;
+
+    background: #e0f2fe;
+
+    color: #0369a1;
+
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    transition: 0.2s ease;
+}
+
+.resume-button:hover {
+    background: #bae6fd;
+
+    color: #075985;
+}
+
+
+/* No students */
+
+.no-students {
+    text-align: center !important;
+
+    padding: 40px !important;
+
+    color: #94a3b8 !important;
+}
+
+
+/* Error */
+
+.error-message {
+    color: #dc2626;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 800px) {
+
+    .student-filters {
+        flex-wrap: wrap;
+    }
+
+    .search-box {
+        flex-basis: 100%;
+    }
+
+    .students-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+}
+.details-button {
+    padding: 7px 13px;
+
+    border: 1px solid #bae6fd;
+    border-radius: 6px;
+
+    background: #ffffff;
+    color: #0369a1;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.details-button:hover {
+    background: #e0f2fe;
+    border-color: #7dd3fc;
+    color: #075985;
+}
+.details-page-header {
+    margin-bottom: 15px;
+}
+
+.back-button {
+    padding: 9px 15px;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+
+    background: #ffffff;
+    color: #475569;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.back-button:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* ================= PLACEMENT ================= */
+
+.placement-card {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+
+    width: 100%;
+    padding: 20px;
+
+    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+
+    box-sizing: border-box;
+}
+
+.placement-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 180px;
+}
+
+.placement-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    gap: 50px;
+
+    flex: 1;
+}
+
+.placement-info div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    min-width: 120px;
+}
+
+.placement-info span {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.placement-info strong {
+    font-size: 15px;
+    color: #1e293b;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+    .placement-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .placement-info {
+        width: 100%;
+
+        justify-content: flex-start;
+
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .placement-card {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .placement-info {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        width: 100%;
+
+        gap: 18px;
+    }
+
+    .placement-info div {
+        min-width: 0;
+    }
+
+    .placement-info strong {
+        white-space: normal;
+        word-break: break-word;
+    }
+}
+

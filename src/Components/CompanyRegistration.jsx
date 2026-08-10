@@ -15,6 +15,7 @@ const CompanyRegister = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [submitStatus, setSubmitStatus] = useState('');
 
   
   const handleChange = (e) => {
@@ -72,11 +73,10 @@ const CompanyRegister = () => {
         headers: { "Content-Type": "multipart/form-data" }
       });
 
-      alert("Company Registered Successfully!");
-      
+      setSubmitStatus("Company registered successfully.");
     } catch (error) {
       console.error("Error:", error);
-      alert("Registration failed");
+      setSubmitStatus("Registration failed. Please review the form and try again.");
     }
   };
 
@@ -84,9 +84,8 @@ const CompanyRegister = () => {
     <div className="register-container">
       <form onSubmit={handleSubmit} className="register-form">
         <div className="register-header">
-          {/* <p className="register-eyebrow">Placement Portal</p> */}
           <h2>Company Registration</h2>
-         
+          {submitStatus && <div className="form-status-message">{submitStatus}</div>}
         </div>
 
         <div className="field-group">

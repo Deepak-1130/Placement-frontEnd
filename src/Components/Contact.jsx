@@ -19,29 +19,27 @@ export default function Contact() {
   return (
     <section id="contact" className="lp-contact">
       <div className="lp-section-inner lp-section-inner--narrow">
-        <div className="lp-section-tag">Get in Touch</div>
+        <div className="lp-section-tag">Contact</div>
         <h2 className="lp-section-heading">Contact Us</h2>
         <p className="lp-section-sub">
-          Have questions? Reach out and our placement team will respond within
-          24 hours.
+          For support or inquiries, contact the placement office directly.
         </p>
 
         <div className="lp-contact__wrap">
           <div className="lp-contact__info">
-            <div className="lp-mail-icon">✉️</div>
+            <div className="lp-mail-icon"></div>
             <div className="lp-contact__blurb">
-              <h3>Placement Cell</h3>
+              <h3>Placement Office</h3>
               <p>placement@college.edu</p>
               <p>+91 98765 43210</p>
-              <p>Mon – Fri, 9 AM – 5 PM</p>
+              <p>Monday – Friday, 9:00 AM – 5:00 PM</p>
             </div>
           </div>
 
           <div className="lp-contact__form-wrap">
             {submitted ? (
               <div className="lp-contact__success">
-                <span className="lp-contact__success-icon">✅</span>
-                <p>Message sent! We'll get back to you shortly.</p>
+                <p>Your message has been submitted. We will respond shortly.</p>
               </div>
             ) : (
               <form className="lp-contact__form" onSubmit={handleSubmit}>
@@ -74,7 +72,7 @@ export default function Contact() {
                   <textarea
                     name="message"
                     className="lp-field__input lp-field__textarea"
-                    placeholder="Your message..."
+                    placeholder="Type your message here"
                     rows={4}
                     value={form.message}
                     onChange={handleChange}
@@ -89,7 +87,7 @@ export default function Contact() {
                   {sending ? (
                     <span className="lp-spinner" />
                   ) : (
-                    <>Send Message ✉️</>
+                    "Send Message"
                   )}
                 </button>
               </form>

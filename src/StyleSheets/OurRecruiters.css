@@ -1,0 +1,49 @@
+.recruiters-section {
+    width: 100%;
+    padding: 90px 0;
+    background: #f8fafc;
+}
+
+.recruiters-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.recruiters-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.recruiter-item {
+    min-height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #334155;
+
+    transition: 0.25s ease;
+}
+
+.recruiter-item:hover {
+    transform: translateY(-4px);
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08);
+}
